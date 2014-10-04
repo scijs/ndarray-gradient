@@ -257,7 +257,7 @@ function generateGradient(boundaryConditions) {
     linkArgs.push(generateTemplate(i))
   }
   linkNames.push(code.join(''))
-  
+
   var link = Function.apply(void 0, linkNames)
   var proc = link.apply(void 0, linkArgs)
   TEMPLATE_CACHE[token] = proc
@@ -286,6 +286,10 @@ function gradient(out, inp, bc) {
     }
   }
   if(inp.size === 0) {
+    return out
+  }
+  if(inp.dimension === 0) {
+    out.set(0)
     return out
   }
   var cached = generateGradient(bc)
