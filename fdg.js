@@ -260,7 +260,7 @@ function generateGradient(boundaryConditions) {
 
   var link = Function.apply(void 0, linkNames)
   var proc = link.apply(void 0, linkArgs)
-  TEMPLATE_CACHE[token] = proc
+  GRADIENT_CACHE[token] = proc
   return proc
 }
 
