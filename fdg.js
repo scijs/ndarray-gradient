@@ -21,17 +21,17 @@ var centralDiff = cwiseCompiler({
   post: EmptyProc,
   body: {
     args: [ {
-      name: 'out', 
+      name: 'out',
       lvalue: true,
       rvalue: false,
       count: 1
     }, {
-      name: 'left', 
+      name: 'left',
       lvalue: false,
       rvalue: true,
       count: 1
     }, {
-      name: 'right', 
+      name: 'right',
       lvalue: false,
       rvalue: true,
       count: 1
@@ -49,7 +49,7 @@ var zeroOut = cwiseCompiler({
   post: EmptyProc,
   body: {
     args: [ {
-      name: 'out', 
+      name: 'out',
       lvalue: true,
       rvalue: false,
       count: 1
@@ -117,7 +117,7 @@ function generateGradient(boundaryConditions) {
 
   var d = boundaryConditions.length
   var code = ['function gradient(dst,src){var s=src.shape.slice();' ]
-  
+
   function handleBoundary(facet) {
     var cod = d - facet.length
 
@@ -139,9 +139,9 @@ function generateGradient(boundaryConditions) {
     if(loStr.length === 0) {
       boundStr = ''
     }
-        
+
     if(cod > 0) {
-      code.push('if(1') 
+      code.push('if(1')
       for(var i=0; i<d; ++i) {
         if(facet.indexOf(i+1) >= 0 || facet.indexOf(-(i+1)) >= 0) {
           continue
@@ -178,9 +178,9 @@ function generateGradient(boundaryConditions) {
                 dPickStr.join(), ')))}else{dst.set(',
               pickStr.join(), ',', bnd, ',0)};')
           } else {
-            code.push('if(s[', bnd, ']>1){diff(', outStr, 
-                ',src.pick(', cPickStr.join(), ')', boundStr, 
-                ',src.pick(', dPickStr.join(), ')', boundStr, 
+            code.push('if(s[', bnd, ']>1){diff(', outStr,
+                ',src.pick(', cPickStr.join(), ')', boundStr,
+                ',src.pick(', dPickStr.join(), ')', boundStr,
                 ');}else{zero(', outStr, ');};')
           }
         break
@@ -199,7 +199,7 @@ function generateGradient(boundaryConditions) {
           if(facet[i] < 0) {
             aPickStr[bnd] = 's[' + bnd + ']-2'
             bPickStr[bnd] = '0'
-            
+
           } else {
             aPickStr[bnd] = 's[' + bnd + ']-1'
             bPickStr[bnd] = '1'
@@ -211,9 +211,9 @@ function generateGradient(boundaryConditions) {
                 bPickStr.join(), ')))}else{dst.set(',
               pickStr.join(), ',', bnd, ',0)};')
           } else {
-            code.push('if(s[', bnd, ']>2){diff(', outStr, 
-                ',src.pick(', aPickStr.join(), ')', boundStr, 
-                ',src.pick(', bPickStr.join(), ')', boundStr, 
+            code.push('if(s[', bnd, ']>2){diff(', outStr,
+                ',src.pick(', aPickStr.join(), ')', boundStr,
+                ',src.pick(', bPickStr.join(), ')', boundStr,
                 ');}else{zero(', outStr, ');};')
           }
         break
